@@ -1,1 +1,1 @@
-export default from './AppNavigator';
+export { default as Router } from './AppNavigator';

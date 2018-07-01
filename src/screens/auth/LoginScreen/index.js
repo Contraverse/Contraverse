@@ -54,13 +54,12 @@ class LoginScreen extends Component {
                     value={this.state.password}
                 />
                 {this.renderButton()}
+                <Text>{JSON.stringify(this.props.error)}</Text>
             </View>
         );
     }
 }
 
-const mapStateToProps = ({ auth }) => {
-    return auth;
-}
+const mapStateToProps = ({ auth }) => auth;
 
 export default connect(mapStateToProps, actions)(LoginScreen);

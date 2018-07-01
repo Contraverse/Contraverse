@@ -1,10 +1,11 @@
 import React from 'react';
-import {Platform, StatusBar, StyleSheet, View} from 'react-native';
-import {Provider} from 'react-redux';
-import {AppLoading, Asset, Font, Icon} from 'expo';
-import Router from './src/navigation';
-import store from './src/store';
+import { Platform, StatusBar, StyleSheet, View } from 'react-native';
+import { Provider } from 'react-redux';
+import { AppLoading, Asset, Font, Icon} from 'expo';
 import firebase from '@firebase/app';
+import { Router } from './src/navigation';
+import store from './src/store';
+import config from './config/firebase';
 
 export default class App extends React.Component {
     state = {
@@ -33,14 +34,6 @@ export default class App extends React.Component {
     }
 
     _loadFirebase = () => {
-        const config = {
-            apiKey: "AIzaSyA_uBXVIGmqSyclrksKF9KSCf8N9dhSdBo",
-            authDomain: "controverse-f770c.firebaseapp.com",
-            databaseURL: "https://controverse-f770c.firebaseio.com",
-            projectId: "controverse-f770c",
-            storageBucket: "controverse-f770c.appspot.com",
-            messagingSenderId: "791590717616"
-        };
         firebase.initializeApp(config);
     }
 

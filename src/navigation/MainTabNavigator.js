@@ -5,11 +5,12 @@ import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
 import TabBarIcon from '../components/TabBarIcon';
 import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
-import {PollScreen, QuestionScreen} from "../screens";
+import {PollScreen, QuestionScreen, ResultScreen} from "../screens";
 
 const HomeStack = createStackNavigator({
     Polls: PollScreen,
-    Question: QuestionScreen
+    Question: QuestionScreen,
+    Results: ResultScreen
 });
 
 HomeStack.navigationOptions = {

@@ -27,3 +27,7 @@ export const fetchPolls = (size) => {
         }
     }
 }
+
+export const selectPoll = (question, questionID) => {
+    return { type: types.POLL_SELECT, payload: { question, questionID }};
+}

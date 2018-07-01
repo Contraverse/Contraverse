@@ -1,15 +1,20 @@
-import firebase from 'firebase';
-import types from '../types';
+import firebase from '@firebase/app';
+import '@firebase/auth';
+import * as types from '../types';
 
-export const signup = (email, password) => {
+export const signup = (email, password, displayName) => {
     return async (dispatch) => {
         dispatch({type: types.AUTH_REQUEST });
         try {
-            const user = await firebase.auth().createUserWithEmailAndPassword(email, password);
+            await firebase.auth().createUserWithEmailAndPassword(email, password);
+            const user = firebase.auth().currentUser;
+            user.updateProfile({
+                displayName
+            });
             dispatch({ type: types.AUTH_SUCCESS, payload: user });
         }
         catch(err) {
-            dispatch({ type: types.AUTH_FAILURE, payload: err });
+            dispatch({ type: types.AUTH_ERROR, payload: err });
         }
     }
 }

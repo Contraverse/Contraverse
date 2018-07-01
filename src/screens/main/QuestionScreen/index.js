@@ -4,20 +4,25 @@ import { connect } from 'react-redux';
 import * as actions from './actions';
 
 class QuestionScreen extends Component {
-    constructor(props) {
-        super();
-        const { navigation } = props;
-        this.question = navigation.getParam('question');
-        this.id = navigation.getParam('id');
+    componentWillMount() {
+        this.props.fetchAnswers(this.props.currentPoll.questionID);
     }
 
-    componentWillMount() {
-        this.props.fetchAnswers(this.id);
+    selectAnswer = (index) => {
+        const pollID = this.props.currentPoll.questionID;
+        this.props.selectAnswer(pollID, index);
+        return this.props.navigation.navigate('Results');
     }
 
     renderAnswerChoices() {
-        return this.props.answers.map(answer => {
-            return <Button title={answer} key={answer}/>
+        return this.props.answers.map((answer, index) => {
+            return (
+                <Button
+                    title={answer.name}
+                    key={index}
+                    onPress={() => this.selectAnswer(index)}
+                />
+            );
         })
     }
 
@@ -25,7 +30,7 @@ class QuestionScreen extends Component {
         return (
             <View>
                 <Text>
-                    {this.question}
+                    {this.props.currentPoll.question}
                 </Text>
                 {this.renderAnswerChoices()}
             </View>
@@ -35,6 +40,8 @@ class QuestionScreen extends Component {
 
 //TODO: Prop Types
 
-const mapStateToProps = ({ question }) => question;
+const mapStateToProps = ({ question, polls }) => {
+    return { ...question, currentPoll: polls.currentPoll };
+}
 
 export default connect(mapStateToProps, actions)(QuestionScreen);
