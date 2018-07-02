@@ -2,33 +2,34 @@ import { createReducer } from 'reduxsauce';
 import * as types from './types';
 
 const INITIAL_STATE = {
-    answers: [],
-    selectedAnswer: null,
+    questions: [],
+    categoryID: null,
     loading: false,
     error: ''
 }
 
-const answersFetchRequest = (state = INITIAL_STATE, action) => {
+const answersFetchRequest = (state = INITIAL_STATE) => {
     return { ...state, loading: true};
 }
 
 const answersFetchSuccess = (state = INITIAL_STATE, action) => {
-    return { ...state, loading: false, answers: action.payload}
+    return { ...state, loading: false, questions: action.payload}
 }
 
 const answersFetchError = (state = INITIAL_STATE, action) => {
     return { ...state, loading: false, error: action.payload}
 }
 
-const answerSelect = (state = INITIAL_STATE, action) => {
-    return { ...state, selectedAnswer: action.payload}
+const categorySet = (state = INITIAL_STATE, action) => {
+    return { ...state, categoryID: action.payload }
 }
+
 
 const HANDLERS = {
     [types.ANSWERS_FETCH_REQUEST]: answersFetchRequest,
     [types.ANSWERS_FETCH_SUCCESS]: answersFetchSuccess,
     [types.ANSWERS_FETCH_ERROR]: answersFetchError,
-    [types.ANSWER_SELECT]: answerSelect
+    [types.CATEGORY_SET]: categorySet,
 }
 
 export default createReducer(INITIAL_STATE, HANDLERS);

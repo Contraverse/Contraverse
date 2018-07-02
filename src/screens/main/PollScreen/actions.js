@@ -9,7 +9,7 @@ const FIRESTORE_SETTINGS = {
 export const fetchPolls = (size) => {
     const db = firebase.firestore();
     db.settings(FIRESTORE_SETTINGS);
-    const questionRef = db.collection('Questions')
+    const questionRef = db.collection('Polls')
     return async (dispatch) => {
         dispatch({ type: types.POLL_FETCH_REQUEST });
         try {
@@ -18,7 +18,7 @@ export const fetchPolls = (size) => {
 
             const polls = [];
             snapshot.forEach(doc => {
-                polls.push({ id: doc.id, question: doc.data().question });
+                polls.push({ id: doc.id, ...doc.data() });
             });
             dispatch({ type: types.POLL_FETCH_SUCCESS, payload: polls });
         }
@@ -28,6 +28,6 @@ export const fetchPolls = (size) => {
     }
 }
 
-export const selectPoll = (question, questionID) => {
-    return { type: types.POLL_SELECT, payload: { question, questionID }};
+export const selectPoll = index => {
+    return { type: types.POLL_SELECT, payload: index };
 }

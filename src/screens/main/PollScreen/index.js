@@ -10,17 +10,17 @@ class PollScreen extends Component {
         this.props.fetchPolls(20);
     }
 
-    selectPoll = (question, questionID) => {
-        this.props.selectPoll(question, questionID);
+    selectPoll = (index) => {
+        this.props.selectPoll(index);
         return this.props.navigation.navigate('Question');
     }
 
-    renderPoll = ({ item }) => {
-        const { question, id } = item;
+    renderPoll = ({ item, index }) => {
+        const { title } = item;
         return (
            <PollCard
-               question={question}
-               onPress={() => this.selectPoll(question, id)}
+               title={title}
+               onPress={() => this.selectPoll(index)}
            />
         )
     }

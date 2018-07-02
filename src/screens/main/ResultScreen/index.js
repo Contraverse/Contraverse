@@ -10,12 +10,12 @@ class ResultScreen extends Component {
     }
     render() {
         return (
-            <View style={[styles.container, { backgroundColor: this.props.backgroundColor }]}>
+            <View style={[styles.container]}>
                 <Text>
                     Results
                 </Text>
                 <Text>
-                    {JSON.stringify(this.props.results)}
+                    You are {this.props.category.name}
                 </Text>
                 <Button
                     title='Debate'
@@ -28,9 +28,9 @@ class ResultScreen extends Component {
     }
 }
 const mapStateToProps = ({ polls, question, results }) => {
-    const pollID = polls.currentPoll.questionID;
-    const backgroundColor = question.answers[question.selectedAnswer].color;
-    return { ...results, pollID, backgroundColor };
+    const poll = polls.polls[polls.currentPoll];
+    const category = poll.categories[question.categoryID];
+    return { ...results, category };
 }
 
 export default connect(mapStateToProps, actions)(ResultScreen);

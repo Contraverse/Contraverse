@@ -1,47 +1,71 @@
 import React, { Component } from 'react';
-import { Text, View, Button } from 'react-native';
+import { View, FlatList, Button, Text } from 'react-native';
+import QuestionCard from './QuestionCard';
 import { connect } from 'react-redux';
 import * as actions from './actions';
+import styles from './styles';
 
 class QuestionScreen extends Component {
     componentWillMount() {
-        this.props.fetchAnswers(this.props.currentPoll.questionID);
+        this.props.fetchQuestions(this.props.pollID);
     }
 
-    selectAnswer = (index) => {
-        const pollID = this.props.currentPoll.questionID;
-        this.props.selectAnswer(pollID, index);
-        return this.props.navigation.navigate('Results');
+    componentDidMount() {
+        this.scores = new Array(this.props.questions.length);
     }
 
-    renderAnswerChoices() {
-        return this.props.answers.map((answer, index) => {
-            return (
-                <Button
-                    title={answer.name}
-                    key={index}
-                    onPress={() => this.selectAnswer(index)}
-                />
-            );
-        })
+    componentWillReceiveProps(newProps) {
+        if(newProps.categoryID !== null)
+            this.props.navigation.navigate('Results');
+    }
+
+    onSelect = (index, score) => {
+        this.scores[index] = score;
+    }
+
+    onSubmit = () => {
+        if(this.scores.includes(undefined))
+            alert("Check to see if you have answered all the questions");
+        else {
+            const { submit, pollCategories, pollID } = this.props;
+            submit(pollID, pollCategories, this.scores);
+        }
+    }
+
+    renderQuestion = ({ item, index }) => {
+        return (
+            <QuestionCard
+                { ...item }
+                onSelect={score => this.onSelect(index, score)}
+            />
+        );
     }
 
     render() {
         return (
-            <View>
-                <Text>
-                    {this.props.currentPoll.question}
-                </Text>
-                {this.renderAnswerChoices()}
+            <View style={styles.container}>
+                <FlatList
+                    data={this.props.questions}
+                    keyExtractor={item => item.id}
+                    renderItem={this.renderQuestion}
+                />
+                <Button
+                    title='Submit'
+                    onPress={this.onSubmit}
+                />
             </View>
         );
     }
 }
 
-//TODO: Prop Types
-
 const mapStateToProps = ({ question, polls }) => {
-    return { ...question, currentPoll: polls.currentPoll };
+    const poll = polls.polls[polls.currentPoll];
+
+    const pollTitle = poll.title;
+    const pollID = poll.id;
+    const pollCategories = poll.categories;
+
+    return { ...question, pollTitle, pollID, pollCategories };
 }
 
 export default connect(mapStateToProps, actions)(QuestionScreen);

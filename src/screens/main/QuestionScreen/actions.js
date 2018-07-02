@@ -6,14 +6,18 @@ import * as types from './types';
 import { ROOT } from '../../../../config/api'
 
 
-export const fetchAnswers = (questionID) => {
+export const fetchQuestions = (pollID) => {
     const db = firebase.firestore();
     return async (dispatch) => {
         dispatch({ type: types.ANSWERS_FETCH_REQUEST });
         try {
-            const query = db.collection('Answers').doc(questionID);
-            const doc = await query.get();
-            dispatch({ type: types.ANSWERS_FETCH_SUCCESS, payload: doc.data().answers });
+            const query = db.collection('Polls').doc(pollID).collection('Questions');
+            const snapshot = await query.get();
+
+            const questions = [];
+            snapshot.forEach(doc => questions.push({ id: doc.id, ...doc.data() }));
+
+            dispatch({ type: types.ANSWERS_FETCH_SUCCESS, payload: questions });
         }
         catch(err) {
             dispatch({ type: types.ANSWERS_FETCH_ERROR, payload: err });
@@ -21,11 +25,17 @@ export const fetchAnswers = (questionID) => {
     }
 }
 
-export const selectAnswer = (pollID, answerIndex) => {
+export const submit = (pollID, categories, scores) => {
+    console.log(scores);
     return dispatch => {
-        const userID = firebase.auth().currentUser.uid;
-        axios.post(`${ROOT}/castVote`, { userID, pollID, answerIndex })
-            .then(console.log);
-        dispatch({ type: types.ANSWER_SELECT, payload: answerIndex });
+        const totalScore = scores.reduce((a, b) => a + b, 0);
+        let categoryID;
+        if(totalScore > 0)
+            categoryID = 0;
+        else
+            categoryID = 1;
+        console.log(totalScore, categoryID);
+        dispatch({ type: types.CATEGORY_SET, payload: categoryID })
+        // const userID = firebase.auth().currentUser.uid;
     }
 }
