@@ -12,7 +12,7 @@ export default function (state = INITIAL_STATE, action) {
         case types.ANSWERS_FETCH_REQUEST:
             return { ...state, loading: true};
         case types.ANSWERS_FETCH_SUCCESS:
-            return { ...state, loading: false, question: payload};
+            return { ...state, loading: false, questions: payload};
         default:
             return state;
     }

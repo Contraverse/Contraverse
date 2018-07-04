@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { Input } from '../../../components';
-import { signup } from '../../../actions/auth/actions';
+import { signup } from '../../../actions/auth/authActions';
 import styles from './styles';
 
 class SignupScreen extends Component {
@@ -20,17 +20,23 @@ class SignupScreen extends Component {
         this.setState({ [key]: value });
     }
 
-    onPress = () => {
-        const { email, password, username } = this.state;
-        this.props.signup(email, password, username);
+    onImagePickerPress = () => {
+        this.props.navigation.navigate('ImagePicker')
     }
 
-    renderButton() {
-        if(!this.props.loading) {
+    onSubmit = () => {
+        const { email, password, username } = this.state;
+        const { imageURI } = this.props;
+        this.props.signup(email, password, username, imageURI);
+    }
+
+    renderImage() {
+        const uri = this.props.imageURI;
+        if(uri) {
             return (
-                <Button
-                    title='Sign Up'
-                    onPress={this.onPress}
+                <Image
+                    style={styles.image}
+                    source={{ uri }}
                 />
             );
         }
@@ -59,7 +65,17 @@ class SignupScreen extends Component {
                     onChangeText={text => this.updateForm('password', text)}
                     value={password}
                 />
-                {this.renderButton()}
+                <View style={styles.imagePickerContainer}>
+                    {this.renderImage()}
+                    <Button
+                        title='Select Avatar'
+                        onPress={this.onImagePickerPress}
+                    />
+                </View>
+                <Button
+                    title='Sign Up'
+                    onPress={this.onSubmit}
+                />
                 <Text>{JSON.stringify(this.props.error)}</Text>
             </View>
         );

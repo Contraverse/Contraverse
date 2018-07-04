@@ -11,7 +11,7 @@ export const fetchQuestions = (pollID) => {
     return async (dispatch) => {
         dispatch({ type: types.ANSWERS_FETCH_REQUEST });
         try {
-            const query = db.collection('Polls').doc(pollID).collection('Questions');
+            const query = db.collection(`Polls/${pollID}/Questions`);
             const snapshot = await query.get();
 
             const questions = [];

@@ -1,9 +1,10 @@
 import React from 'react';
 import { createStackNavigator } from 'react-navigation';
-import { LoginScreen, SignupScreen, SplashScreen } from '../screens';
+import { LoginScreen, SignupScreen, SplashScreen, ImagePicker } from '../screens';
 
 export default createStackNavigator({
     Splash: SplashScreen,
     Login: LoginScreen,
-    Signup: SignupScreen
+    Signup: SignupScreen,
+    ImagePicker
 })

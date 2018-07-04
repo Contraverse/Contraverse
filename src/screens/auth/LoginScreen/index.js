@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
 import { connect } from 'react-redux';
 import { Input } from '../../../components';
-import { login } from '../../../actions/auth/actions';
+import { login } from '../../../actions/auth/authActions';
 import styles from './styles';
 
 class LoginScreen extends Component {

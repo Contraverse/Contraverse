@@ -1,28 +1,24 @@
-import { createReducer } from 'reduxsauce';
 import * as types from '../../actions/auth/types';
 
 const INITIAL_STATE = {
+    imageURI: null,
     loading: false,
     error: '',
     user: null
 }
 
-const authError = (state = INITIAL_STATE, action) => {
-    return { ...state, error: action.payload }
+export default (state = INITIAL_STATE, action) => {
+    const { type, payload } = action;
+    switch(type) {
+        case types.AUTH_REQUEST:
+            return { ...state, loading: true};
+        case types.AUTH_SUCCESS:
+            return { ...state, loading: false, user: payload };
+        case types.AUTH_ERROR:
+            return { ...state, loading: true, error: payload };
+        case types.IMAGE_SELECT:
+            return { ...state, imageURI: payload };
+        default:
+            return state;
+    }
 }
-
-const authRequest = (state = INITIAL_STATE, action) => {
-    return { ...state, loading: true}
-}
-
-const authSuccess = (state = INITIAL_STATE, action) => {
-    return { ...INITIAL_STATE, user: action.payload };
-}
-
-const HANDLERS = {
-    [types.AUTH_REQUEST]: authRequest,
-    [types.AUTH_ERROR]: authError,
-    [types.AUTH_SUCCESS]: authSuccess
-}
-
-export default createReducer(INITIAL_STATE, HANDLERS);

@@ -63,3 +63,4 @@ typings/
 #UserSpecific
 .expo/
 .idea/
+*.DS_Store

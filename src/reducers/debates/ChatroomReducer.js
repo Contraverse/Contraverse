@@ -1,9 +1,9 @@
 import * as types from '../../actions/debates/types';
 
 const INITIAL_STATE = {
+    users: null,
     messages: [],
     chatID: null,
-    loading: false
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -11,10 +11,10 @@ export default (state = INITIAL_STATE, action) => {
     switch(type) {
         case types.SET_CHATROOM_ID:
             return { ...state, chatID: payload };
-        case types.MESSAGES_FETCH_REQUEST:
-            return { ...state, loading: true};
+        case types.DATA_FETCH_SUCCESS:
+            return { ...state, users: payload.users, messages: payload.messages };
         case types.MESSAGES_FETCH_SUCCESS:
-            return { ...state, messages: payload};
+            return { ...state, messagesLoading: false, messages: payload};
         default:
             return state;
     }
