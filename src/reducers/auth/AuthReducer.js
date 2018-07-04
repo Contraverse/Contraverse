@@ -1,5 +1,5 @@
 import { createReducer } from 'reduxsauce';
-import * as types from './types';
+import * as types from '../../actions/auth/types';
 
 const INITIAL_STATE = {
     loading: false,

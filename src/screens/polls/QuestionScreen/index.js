@@ -2,21 +2,18 @@ import React, { Component } from 'react';
 import { View, FlatList, Button, Text } from 'react-native';
 import QuestionCard from './QuestionCard';
 import { connect } from 'react-redux';
-import * as actions from './actions';
+import * as actions from '../../../actions/polls/questionActions';
 import styles from './styles';
 
 class QuestionScreen extends Component {
     componentWillMount() {
-        this.props.fetchQuestions(this.props.pollID);
+        const { fetchQuestions, poll} = this.props;
+        if(poll)
+            fetchQuestions(poll.id);
     }
 
     componentDidMount() {
         this.scores = new Array(this.props.questions.length);
-    }
-
-    componentWillReceiveProps(newProps) {
-        if(newProps.categoryID !== null)
-            this.props.navigation.navigate('Results');
     }
 
     onSelect = (index, score) => {
@@ -27,8 +24,8 @@ class QuestionScreen extends Component {
         if(this.scores.includes(undefined))
             alert("Check to see if you have answered all the questions");
         else {
-            const { submit, pollCategories, pollID } = this.props;
-            submit(pollID, pollCategories, this.scores);
+            const { submit, poll, navigation } = this.props;
+            submit(poll.id, poll.categories, this.scores, navigation);
         }
     }
 
@@ -58,14 +55,8 @@ class QuestionScreen extends Component {
     }
 }
 
-const mapStateToProps = ({ question, polls }) => {
-    const poll = polls.polls[polls.currentPoll];
-
-    const pollTitle = poll.title;
-    const pollID = poll.id;
-    const pollCategories = poll.categories;
-
-    return { ...question, pollTitle, pollID, pollCategories };
+const mapStateToProps = ({ polls, questions }) => {
+    return { ...questions, poll: polls.currentPoll };
 }
 
 export default connect(mapStateToProps, actions)(QuestionScreen);

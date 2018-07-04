@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
 import { connect } from 'react-redux';
 import { Input } from '../../../components';
-import * as actions from './actions';
+import { login } from '../../../actions/auth/actions';
 import styles from './styles';
 
 class LoginScreen extends Component {
@@ -62,4 +62,4 @@ class LoginScreen extends Component {
 
 const mapStateToProps = ({ auth }) => auth;
 
-export default connect(mapStateToProps, actions)(LoginScreen);
+export default connect(mapStateToProps, { login })(LoginScreen);

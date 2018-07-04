@@ -3,8 +3,8 @@ import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Provider } from 'react-redux';
 import { AppLoading, Asset, Font, Icon} from 'expo';
 import firebase from '@firebase/app';
-import { Router } from './src/navigation';
-import store from './src/store';
+import Router  from './src/navigation';
+import store from './src/reducers/index';
 import config from './config/firebase';
 
 export default class App extends React.Component {

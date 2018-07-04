@@ -1,5 +1,6 @@
 import firebase from '@firebase/app';
 import '@firebase/firestore';
+import '@firebase/auth';
 import * as types from './types';
 
 const FIRESTORE_SETTINGS = {
@@ -28,6 +29,27 @@ export const fetchPolls = (size) => {
     }
 }
 
-export const selectPoll = index => {
-    return { type: types.POLL_SELECT, payload: index };
+export const selectPoll = (poll, navigation) => {
+    return async dispatch => {
+        const categoryID = await getPollResults(poll.id);
+        dispatch({ type: types.POLL_SELECT, payload: poll });
+        if(categoryID !== null) {
+            dispatch({ type: types.CATEGORY_SET, payload: poll.categories[categoryID]});
+            navigation.navigate('Results');
+        }
+        else {
+            navigation.navigate('Question');
+        }
+    }
+}
+
+const getPollResults = async (pollID) => {
+    const userID = firebase.auth().currentUser.uid;
+    const query = firebase.firestore()
+        .collection('Profiles').doc(userID)
+        .collection('Polls').doc(pollID);
+    const doc = await query.get();
+    if(doc.exists)
+        return doc.data().category;
+    return null;
 }

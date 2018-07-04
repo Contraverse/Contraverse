@@ -3,7 +3,7 @@ import '@firebase/firestore';
 import '@firebase/auth'
 import axios from 'axios';
 import * as types from './types';
-import { ROOT } from '../../../../config/api'
+import { ROOT } from '../../../config/api';
 
 
 export const fetchQuestions = (pollID) => {
@@ -16,7 +16,6 @@ export const fetchQuestions = (pollID) => {
 
             const questions = [];
             snapshot.forEach(doc => questions.push({ id: doc.id, ...doc.data() }));
-
             dispatch({ type: types.ANSWERS_FETCH_SUCCESS, payload: questions });
         }
         catch(err) {
@@ -25,17 +24,15 @@ export const fetchQuestions = (pollID) => {
     }
 }
 
-export const submit = (pollID, categories, scores) => {
-    console.log(scores);
+export const submit = (pollID, categories, scores, navigation) => {
     return dispatch => {
         const totalScore = scores.reduce((a, b) => a + b, 0);
-        let categoryID;
-        if(totalScore > 0)
-            categoryID = 0;
-        else
-            categoryID = 1;
-        console.log(totalScore, categoryID);
-        dispatch({ type: types.CATEGORY_SET, payload: categoryID })
-        // const userID = firebase.auth().currentUser.uid;
+        const categoryID = totalScore > 0 ? 0 : 1;
+        const userID = firebase.auth().currentUser.uid;
+        const category = categories[categoryID];
+
+        axios.post(`${ROOT}/castVote`, { userID, pollID, categoryID });
+        dispatch({ type: types.CATEGORY_SET, payload: category });
+        navigation.navigate('Results');
     }
 }
