@@ -1,4 +1,3 @@
-import { createReducer } from 'reduxsauce';
 import * as types from '../../actions/polls/types';
 
 const INITIAL_STATE = {
@@ -7,23 +6,17 @@ const INITIAL_STATE = {
     loading: false,
 }
 
-const pollFetchRequest = (state = INITIAL_STATE) => {
-    return { ...state, loading: true };
+export default function (state = INITIAL_STATE, action) {
+    const { type, payload } = action;
+    switch(type) {
+        case types.POLL_FETCH_REQUEST:
+            return { ...state, loading: true };
+        case types.POLL_FETCH_SUCCESS:
+            return { ...state, loading: false, polls: payload };
+        case types.POLL_SELECT:
+            return { ...state, currentPoll: payload };
+        default:
+            return state;
+    }
 }
-
-const pollFetchSuccess = (state = INITIAL_STATE, action) => {
-    return { ...state, loading: false, polls: action.payload }
-}
-
-const pollSelect = (state = INITIAL_STATE, action) => {
-    return { ...state, currentPoll: action.payload }
-}
-
-const HANDLERS = {
-    [types.POLL_FETCH_REQUEST]: pollFetchRequest,
-    [types.POLL_FETCH_SUCCESS]: pollFetchSuccess,
-    [types.POLL_SELECT]: pollSelect
-}
-
-export default createReducer(INITIAL_STATE, HANDLERS);
 

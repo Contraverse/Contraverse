@@ -1,4 +1,3 @@
-import { createReducer } from 'reduxsauce';
 import * as types from '../../actions/polls/types';
 
 const INITIAL_STATE = {
@@ -12,34 +11,20 @@ const INITIAL_STATE = {
     spectateLoading: false
 }
 
-const resultsFetchRequest = (state = INITIAL_STATE) => {
-    return { ...state, resultsLoading: true};
+export default function (state = INITIAL_STATE, action) {
+    const { type, payload} = action;
+    switch(type) {
+        case types.CATEGORY_SET:
+            return {...state, category: payload};
+        case types.RESULTS_FETCH_REQUEST:
+            return { ...state, resultsLoading: true};
+        case types.RESULTS_FETCH_SUCCESS:
+            return { ...state, resultsLoading: false, results: payload };
+        case types.FIND_DEBATE_REQUEST:
+            return { ...state, debateLoading: true };
+        case types.FIND_DEBATE_SUCCESS:
+            return { ...state, debateLoading: false, debateInfo: payload };
+        default:
+            return state;
+    }
 }
-
-const resultsFetchSuccess = (state = INITIAL_STATE) => {
-    return { ...state, resultsLoading: false }
-}
-
-const findDebateRequest = (state = INITIAL_STATE) => {
-    return { ...state, debateLoading: true};
-}
-
-const findDebateSuccess = (state = INITIAL_STATE, action) => {
-    return { ...state, debateLoading: false, debateInfo: action.payload}
-}
-
-const categorySet = (state = INITIAL_STATE, action) => {
-    return { ...state, category: action.payload };
-}
-
-const HANDLERS = {
-    [types.CATEGORY_SET]: categorySet,
-
-    [types.RESULTS_FETCH_REQUEST]: resultsFetchRequest,
-    [types.RESULTS_FETCH_SUCCESS]: resultsFetchSuccess,
-
-    [types.FIND_DEBATE_REQUEST]: findDebateRequest,
-    [types.FIND_DEBATE_SUCCESS]: findDebateSuccess
-}
-
-export default createReducer(INITIAL_STATE, HANDLERS);

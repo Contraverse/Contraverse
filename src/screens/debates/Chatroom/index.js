@@ -28,8 +28,7 @@ class Chatroom extends Component {
     }
 
     render() {
-        const { messages, users } = this.props;
-        if(messages && users) {
+        if(this.props.messages) {
             return this.renderMain();
         }
         return this.renderLoading();

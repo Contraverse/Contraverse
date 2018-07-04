@@ -45,9 +45,7 @@ export const selectPoll = (poll, navigation) => {
 
 const getPollResults = async (pollID) => {
     const userID = firebase.auth().currentUser.uid;
-    const query = firebase.firestore()
-        .collection('Profiles').doc(userID)
-        .collection('Polls').doc(pollID);
+    const query = firebase.firestore().doc(`Profiles/${userID}/Polls/${pollID}`);
     const doc = await query.get();
     if(doc.exists)
         return doc.data().category;

@@ -10,7 +10,7 @@ export const fetchResults = (pollID) => {
     const db = firebase.firestore();
     return async (dispatch) => {
         dispatch({ type: types.RESULTS_FETCH_REQUEST });
-        const ref = db.collection('Polls').doc(pollID).collection('Results');
+        const ref = db.collection(`Polls/${pollID}/Results`);
         const stats = await getCollection(ref);
         dispatch({type: types.RESULTS_FETCH_SUCCESS, payload: stats });
     }
