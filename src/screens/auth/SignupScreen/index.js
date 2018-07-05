@@ -2,32 +2,17 @@ import React, { Component } from 'react';
 import { View, Text, Button, Image } from 'react-native';
 import { connect } from 'react-redux';
 import { Input } from '../../../components';
-import { signup } from '../../../actions/auth/authActions';
+import * as actions from '../../../actions/auth/authActions';
 import styles from './styles';
 
 class SignupScreen extends Component {
-    constructor() {
-        super();
-        this.state = { username: '', email: '', password: ''};
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.user)
-            this.props.navigation.navigate('Main');
-    }
-
-    updateForm(key, value) {
-        this.setState({ [key]: value });
-    }
-
     onImagePickerPress = () => {
         this.props.navigation.navigate('ImagePicker')
     }
 
     onSubmit = () => {
-        const { email, password, username } = this.state;
-        const { imageURI } = this.props;
-        this.props.signup(email, password, username, imageURI);
+        const { email, password, username, intervalID, imageURI, navigation, signup } = this.props;
+        signup(intervalID, email, password, username, imageURI, navigation);
     }
 
     renderImage() {
@@ -43,7 +28,7 @@ class SignupScreen extends Component {
     }
 
     render() {
-        const { username, email, password } = this.state;
+        const { username, email, password, updateForm } = this.props;
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>
@@ -51,18 +36,18 @@ class SignupScreen extends Component {
                 </Text>
                 <Input
                     placeholder='Username'
-                    onChangeText={text => this.updateForm('username', text)}
+                    onChangeText={text => updateForm('username', text)}
                     value={username}
                 />
                 <Input
                     placeholder='Email'
-                    onChangeText={text => this.updateForm('email', text)}
+                    onChangeText={text => updateForm('email', text)}
                     value={email}
                 />
                 <Input
                     secureTextEntry
                     placeholder='Password'
-                    onChangeText={text => this.updateForm('password', text)}
+                    onChangeText={text => updateForm('password', text)}
                     value={password}
                 />
                 <View style={styles.imagePickerContainer}>
@@ -82,6 +67,8 @@ class SignupScreen extends Component {
     }
 }
 
-const mapStateToProps = ({ auth }) => auth;
+const mapStateToProps = ({ auth, splash }) => {
+    return { ...auth, ...splash };
+}
 
-export default connect(mapStateToProps, { signup })(SignupScreen);
+export default connect(mapStateToProps, actions)(SignupScreen);

@@ -2,41 +2,17 @@ import React, { Component } from 'react';
 import { View, Text, Button } from 'react-native';
 import { connect } from 'react-redux';
 import { Input } from '../../../components';
-import { login } from '../../../actions/auth/authActions';
+import * as actions from '../../../actions/auth/authActions';
 import styles from './styles';
 
 class LoginScreen extends Component {
-    constructor() {
-        super();
-        this.state = { email: '', password: ''};
-    }
-
-    componentWillReceiveProps(nextProps) {
-        if(nextProps.user)
-            this.props.navigation.navigate('Main');
-    }
-
-    updateForm(key, value) {
-        this.setState({ [key]: value });
-    }
-
     onPress = () => {
-        const { email, password } = this.state;
-        this.props.login(email, password);
-    }
-
-    renderButton() {
-        if(!this.props.loading) {
-            return (
-                <Button
-                    title='Login'
-                    onPress={this.onPress}
-                />
-            );
-        }
+        const { intervalID, email, password, navigation, login } = this.props;
+        login(intervalID, email, password, navigation );
     }
 
     render() {
+        const { email, password, updateForm } = this.props;
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>
@@ -44,22 +20,27 @@ class LoginScreen extends Component {
                 </Text>
                 <Input
                     placeholder='Email'
-                    onChangeText={text => this.updateForm('email', text)}
-                    value={this.state.email}
+                    onChangeText={text => updateForm('email', text)}
+                    value={email}
                 />
                 <Input
                     secureTextEntry
                     placeholder='Password'
-                    onChangeText={text => this.updateForm('password', text)}
-                    value={this.state.password}
+                    onChangeText={text => updateForm('password', text)}
+                    value={password}
                 />
-                {this.renderButton()}
+                <Button
+                    title='Login'
+                    onPress={this.onPress}
+                />
                 <Text>{JSON.stringify(this.props.error)}</Text>
             </View>
         );
     }
 }
 
-const mapStateToProps = ({ auth }) => auth;
+const mapStateToProps = ({ auth, splash }) => {
+    return { ...auth, ...splash };
+};
 
-export default connect(mapStateToProps, { login })(LoginScreen);
+export default connect(mapStateToProps, actions)(LoginScreen);

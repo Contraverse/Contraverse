@@ -1,5 +1,6 @@
 import { combineReducers, createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk'
+import SplashReducer from './auth/SplashReducer';
 import AuthReducer from './auth/AuthReducer';
 import ImagePickerReducer from './auth/ImagePickerReducer';
 import PollReducer from './polls/PollReducer';
@@ -11,6 +12,7 @@ import ChatroomReducer from './debates/ChatroomReducer';
 
 const reducers = combineReducers({
     // auth
+    splash: SplashReducer,
     auth: AuthReducer,
     imagePicker: ImagePickerReducer,
 

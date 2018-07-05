@@ -1,15 +1,19 @@
 import * as types from '../../actions/auth/types';
 
 const INITIAL_STATE = {
+    email: null,
+    username: null,
+    password: null,
     imageURI: null,
     loading: false,
     error: '',
     user: null
 }
 
-export default (state = INITIAL_STATE, action) => {
-    const { type, payload } = action;
+export default (state = INITIAL_STATE, { type, payload }) => {
     switch(type) {
+        case types.UPDATE_FORM:
+            return { ...state, [payload.key]: payload.value };
         case types.AUTH_REQUEST:
             return { ...state, loading: true};
         case types.AUTH_SUCCESS:
