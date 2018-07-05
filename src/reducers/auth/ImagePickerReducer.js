@@ -4,8 +4,7 @@ const INITIAL_STATE = {
     images: null,
 }
 
-export default (state = INITIAL_STATE, action) => {
-    const { type, payload } = action;
+export default (state = INITIAL_STATE, { type, payload }) => {
     switch(type) {
         case types.IMAGES_FETCH_SUCCESS:
             return { ...state, images: payload };

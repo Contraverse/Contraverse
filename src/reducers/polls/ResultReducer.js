@@ -11,8 +11,7 @@ const INITIAL_STATE = {
     spectateLoading: false
 }
 
-export default function (state = INITIAL_STATE, action) {
-    const { type, payload} = action;
+export default function (state = INITIAL_STATE, { type, payload }) {
     switch(type) {
         case types.CATEGORY_SET:
             return {...state, category: payload};

@@ -5,8 +5,7 @@ const INITIAL_STATE = {
     loading: false
 }
 
-export default (state = INITIAL_STATE, action) => {
-    const { type, payload } = action;
+export default (state = INITIAL_STATE, { type, payload }) => {
     switch(type) {
         case types.DEBATES_FETCH_REQUEST:
             return { ...state, loading: true};

@@ -6,8 +6,7 @@ const INITIAL_STATE = {
     loading: false,
 }
 
-export default function (state = INITIAL_STATE, action) {
-    const { type, payload } = action;
+export default function (state = INITIAL_STATE, { type, payload }) {
     switch(type) {
         case types.POLL_FETCH_REQUEST:
             return { ...state, loading: true };

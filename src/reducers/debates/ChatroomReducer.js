@@ -6,8 +6,7 @@ const INITIAL_STATE = {
     chatID: null,
 }
 
-export default (state = INITIAL_STATE, action) => {
-    const { type, payload } = action;
+export default (state = INITIAL_STATE, { type, payload }) => {
     switch(type) {
         case types.SET_CHATROOM_ID:
             return { ...state, chatID: payload };
