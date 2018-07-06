@@ -10,15 +10,25 @@ class Chatroom extends Component {
         initChatroom(chatID);
     }
 
+    getChatProps() {
+        const { messages, userID, chatID, sendMessages, spectate } = this.props;
+        const props = {
+            messages,
+            user: {
+                _id: userID
+            },
+            onSend: messages => sendMessages(chatID, messages)
+        };
+        if(spectate) {
+            props.renderInputToolbar = () => <View />;
+        }
+        return props;
+    }
+
     renderMain() {
-        const { messages, userID, chatID, sendMessages } = this.props;
         return (
             <GiftedChat
-                messages={messages}
-                user={{
-                    _id: userID
-                }}
-                onSend={messages => sendMessages(chatID, messages)}
+                { ...this.getChatProps() }
             />
         );
     }

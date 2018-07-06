@@ -16,7 +16,7 @@ export const fetchResults = (pollID) => {
     }
 }
 
-export const findDebate = (pollID, category, navigation) => {
+export function findDebate(pollID, category, navigation) {
     const userID = firebase.auth().currentUser.uid;
     return async (dispatch) => {
         dispatch({ type: types.FIND_DEBATE_REQUEST });
@@ -26,6 +26,18 @@ export const findDebate = (pollID, category, navigation) => {
             navigation.navigate('DebateList');
         else
             alert("No match found. We'll notify you when we find you an opponent");
+    }
+}
+
+export function findSpectate(pollID, navigation) {
+    const userID = firebase.auth().currentUser.uid;
+    return async (dispatch) => {
+        dispatch({ type: types.FIND_SPECTATE_REQUEST });
+        const { data } = await axios.post(`${ROOT}/findSpectate`, { pollID, userID });
+        if(data.found)
+            navigation.navigate('SpectateList');
+        else
+            alert("No debate found. Come back later!");
     }
 }
 

@@ -7,21 +7,15 @@ export function fetchDebates() {
     return async (dispatch) => {
         dispatch({ type: types.DEBATES_FETCH_REQUEST });
         const query = getDebatesRef();
+        query.onSnapshot(snapshot => dispatchDebates(dispatch, snapshot));
         const snapshot = await query.get();
         dispatchDebates(dispatch, snapshot);
     }
 }
 
-export function initDebateListener() {
-    return async (dispatch) => {
-        const query = getDebatesRef();
-        query.onSnapshot(snapshot => dispatchDebates(dispatch, snapshot));
-    }
-}
-
 export function selectDebate(id, navigation) {
     return dispatch => {
-        dispatch({ type: types.SET_CHATROOM_ID, payload: id});
+        dispatch({ type: types.SET_CHATROOM_ID, payload: { id, spectate: false }});
         navigation.navigate('Chatroom');
     }
 }
@@ -46,5 +40,5 @@ function dispatchDebates(dispatch, snapshot) {
 }
 
 function sortByDate (a, b) {
-    return b.dateUpdated - a.dateUpdated;
+    return a.dateUpdated - b.dateUpdated;
 }

@@ -11,6 +11,7 @@ export { default as ResultScreen } from './polls/ResultScreen';
 
 //debates
 export { default as DebateList } from './debates/DebateList';
+export { default as SpectateList } from './debates/SpectateList';
 export { default as OpeningScreen } from './debates/OpeningScreen';
 export { default as Chatroom } from './debates/Chatroom';
 

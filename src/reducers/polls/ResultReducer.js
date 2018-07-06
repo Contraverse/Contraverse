@@ -4,7 +4,7 @@ const INITIAL_STATE = {
     results: null,
     category: null,
     debateInfo: null,
-    spectateFound: false,
+    spectateInfo: null,
 
     resultsLoading: false,
     debateLoading: false,
@@ -23,6 +23,10 @@ export default function (state = INITIAL_STATE, { type, payload }) {
             return { ...state, debateLoading: true };
         case types.FIND_DEBATE_SUCCESS:
             return { ...state, debateLoading: false, debateInfo: payload };
+        case types.FIND_SPECTATE_REQUEST:
+            return { ...state, spectateLoading: true };
+        case types.FIND_SPECTATE_SUCCESS:
+            return { ...state, spectateLoading: false, spectateInfo: payload };
         default:
             return state;
     }

@@ -1,13 +1,13 @@
 import * as types from '../../actions/debates/types';
 
 const INITIAL_STATE = {
-    debates: []
+    spectates: [],
 }
 
 export default (state = INITIAL_STATE, { type, payload }) => {
     switch(type) {
-        case types.DEBATES_FETCH_SUCCESS:
-            return { ...state, debates: payload};
+        case types.SPECTATES_FETCH_SUCCESS:
+            return { ...state, spectates: payload};
         default:
             return state;
     }

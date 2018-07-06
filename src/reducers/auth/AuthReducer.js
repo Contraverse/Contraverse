@@ -6,6 +6,7 @@ const INITIAL_STATE = {
     password: null,
     imageURI: null,
     loading: false,
+    gender: null,
     error: '',
     user: null
 }

@@ -22,17 +22,16 @@ export function login(intervalID, email, password, navigation) {
     }
 }
 
-export function signup(intervalID, email, password, displayName, photoURL) {
+export function signup(intervalID, email, password, user, navigation) {
     const auth = firebase.auth();
     return async (dispatch) => {
         dispatch({type: types.AUTH_REQUEST });
         try {
             await auth.createUserWithEmailAndPassword(email, password);
-            const user  = auth.currentUser;
-            addUserData(user.uid, displayName, photoURL)
             clearInterval(intervalID);
-            dispatch({ type: types.AUTH_SUCCESS, payload: user });
+            dispatch({ type: types.AUTH_SUCCESS, payload: auth.currentUser });
             navigation.navigate('Main');
+            addUserData(auth.currentUser.uid, user);
         }
         catch(err) {
             console.log(err);
@@ -41,10 +40,11 @@ export function signup(intervalID, email, password, displayName, photoURL) {
     }
 }
 
-function addUserData(userID, username, avatar) {
+function addUserData(userID, { username, avatar, gender }) {
     const db = firebase.firestore();
     return db.doc(`Profiles/${userID}`).set({
         username,
-        avatar
+        avatar,
+        gender
     })
 }

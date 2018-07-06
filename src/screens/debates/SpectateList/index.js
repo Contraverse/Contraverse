@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
-import { View, FlatList, Text } from 'react-native';
+import { View, FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import DebateCard from './DebateCard';
-import * as actions from '../../../actions/debates/debateListActions';
+import SpectateCard from './SpectateCard';
+import * as actions from '../../../actions/debates/spectateListActions';
 import styles from './styles';
 
 
-class DebateList extends Component {
+class SpectateList extends Component {
     componentWillMount() {
-        this.props.fetchDebates();
+        this.props.fetchSpectates();
     }
 
     selectDebate(id) {
@@ -18,7 +18,7 @@ class DebateList extends Component {
 
     renderItem = ({ item }) => {
         return (
-            <DebateCard
+            <SpectateCard
                 {...item}
                 onPress = {() => this.selectDebate(item.id)}
             />
@@ -28,7 +28,7 @@ class DebateList extends Component {
         return (
           <View style={styles.container}>
               <FlatList
-                  data={this.props.debates}
+                  data={this.props.spectates}
                   renderItem={this.renderItem}
                   keyExtractor={item => item.id}
               />
@@ -37,6 +37,6 @@ class DebateList extends Component {
     }
 }
 
-const mapStateToProps = ({ debateList }) => debateList;
+const mapStateToProps = ({ spectateList }) => spectateList;
 
-export default connect(mapStateToProps, actions)(DebateList);
+export default connect(mapStateToProps, actions)(SpectateList);

@@ -14,5 +14,9 @@ export default StyleSheet.create({
     image: {
         width: 60,
         height: 60
+    },
+    picker: {
+        width: 100,
+        height: 200
     }
 })

@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableWithoutFeedback, View, Text } from 'react-native';
 import styles from './styles';
 
-const DebateCard = ({ lastMessage, onPress }) => {
+const SpectateCard = ({ lastMessage, onPress }) => {
     return (
         <TouchableWithoutFeedback onPress={onPress}>
             <View style={styles.container}>
@@ -13,4 +13,4 @@ const DebateCard = ({ lastMessage, onPress }) => {
 };
 
 
-export default DebateCard;
+export default SpectateCard;

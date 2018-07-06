@@ -7,7 +7,9 @@ import PollReducer from './polls/PollReducer';
 import QuestionReducer from './polls/QuestionReducer';
 import ResultReducer from './polls/ResultReducer';
 import DebateListReducer from './debates/DebateListReducer';
+import SpectateListReducer from './debates/SpectateListReducer';
 import ChatroomReducer from './debates/ChatroomReducer';
+import ProfileReducer from './profile/ProfileReducer'
 
 
 const reducers = combineReducers({
@@ -23,7 +25,11 @@ const reducers = combineReducers({
 
     // debates
     debateList: DebateListReducer,
+    spectateList: SpectateListReducer,
     chatroom: ChatroomReducer,
+
+    // profile
+    profile: ProfileReducer,
 })
 
 export default createStore(reducers, {}, applyMiddleware(ReduxThunk));

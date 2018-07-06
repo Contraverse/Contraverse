@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Button, Image } from 'react-native';
+import { View, Text, Button, Image, PickerIOS } from 'react-native';
 import { connect } from 'react-redux';
 import { Input } from '../../../components';
 import * as actions from '../../../actions/auth/authActions';
@@ -11,8 +11,9 @@ class SignupScreen extends Component {
     }
 
     onSubmit = () => {
-        const { email, password, username, intervalID, imageURI, navigation, signup } = this.props;
-        signup(intervalID, email, password, username, imageURI, navigation);
+        const { email, password, username, intervalID, imageURI, gender, navigation, signup } = this.props;
+        const user = { avatar: imageURI, gender, username };
+        signup(intervalID, email, password, user, navigation);
     }
 
     renderImage() {
@@ -28,7 +29,7 @@ class SignupScreen extends Component {
     }
 
     render() {
-        const { username, email, password, updateForm } = this.props;
+        const { username, email, password, updateForm, gender } = this.props;
         return (
             <View style={styles.container}>
                 <Text style={styles.title}>
@@ -56,6 +57,16 @@ class SignupScreen extends Component {
                         title='Select Avatar'
                         onPress={this.onImagePickerPress}
                     />
+                </View>
+                <View style={styles.picker}>
+                    <PickerIOS
+                        selectedValue={gender}
+                        style={{flex: 1}}
+                        onValueChange={value => updateForm('gender', value)}
+                    >
+                        <PickerIOS.Item label='Male' value='male' />
+                        <PickerIOS.Item label='Female' value='female' />
+                    </PickerIOS>
                 </View>
                 <Button
                     title='Sign Up'
