@@ -11,12 +11,16 @@ export function login(intervalID, email, password, navigation) {
     return async (dispatch) => {
         dispatch({type: types.AUTH_REQUEST });
         try {
-            const user = await firebase.auth().signInWithEmailAndPassword(email, password);
+            const auth = await firebase.auth().signInWithEmailAndPassword(email, password);
             clearInterval(intervalID);
-            dispatch({ type: types.AUTH_SUCCESS, payload: user.user });
             navigation.navigate('Main');
+            const user = await getUserData(auth.user.uid);
+            user.uid = auth.user.uid;
+            dispatch({ type: types.AUTH_SUCCESS, payload: user });
+            console.log(user);
         }
         catch(err) {
+            console.log(err);
             dispatch({ type: types.AUTH_ERROR, payload: err });
         }
     }
@@ -29,9 +33,10 @@ export function signup(intervalID, email, password, user, navigation) {
         try {
             await auth.createUserWithEmailAndPassword(email, password);
             clearInterval(intervalID);
-            dispatch({ type: types.AUTH_SUCCESS, payload: auth.currentUser });
-            navigation.navigate('Main');
             addUserData(auth.currentUser.uid, user);
+            user.uid = auth.currentUser.uid;
+            dispatch({ type: types.AUTH_SUCCESS, payload: user});
+            navigation.navigate('Main');
         }
         catch(err) {
             console.log(err);
@@ -47,4 +52,10 @@ function addUserData(userID, { username, avatar, gender }) {
         avatar,
         gender
     })
+}
+
+async function getUserData(userID) {
+    const db = firebase.firestore();
+    const doc = await db.doc(`Profiles/${userID}`).get();
+    return doc.data();
 }

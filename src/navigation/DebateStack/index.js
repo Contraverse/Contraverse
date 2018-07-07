@@ -2,13 +2,14 @@ import React from 'react';
 import {Platform} from "react-native";
 import TabBarIcon from '../../components/TabBarIcon';
 import { createStackNavigator } from 'react-navigation';
-import { Chatroom, OpeningScreen } from '../../screens';
+import { Chatroom, ChatDetails, OpeningScreen } from '../../screens';
 import MessagesNavigator from './MessagesNavigator';
 
 const DebateStack = createStackNavigator({
     MessagesNavigator,
     OpeningScreen,
-    Chatroom
+    Chatroom,
+    ChatDetails
 });
 
 DebateStack.navigationOptions = {

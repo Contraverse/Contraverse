@@ -15,11 +15,30 @@ class ResultScreen extends Component {
     }
 
     findSpectate = () => {
-        alert('Spectate')
+        const { poll, navigation, findSpectate } = this.props;
+        return findSpectate(poll.id, navigation);
     }
 
     renderLoading() {
         return <View />;
+    }
+
+    renderResults() {
+        // if(!this.props.results)
+        //     return this.renderLoading();
+        // const { results } = this.props;
+        // const randomColor = () => ('#' + (Math.random() * 0xFFFFFF << 0).toString(16) + '000000').slice(0, 7);
+        // const data = results.totalVotes.counts
+        //     .filter(value => value > 0)
+        //     .map((votes, index) => ({
+        //         value: votes,
+        //         svg: {
+        //             fill: randomColor()
+        //         },
+        //         key: index
+        //     }));
+        // console.log(data);
+        // return <PieChart data={data} style={{ height: 200 }} />
     }
 
     renderMain() {
@@ -31,6 +50,7 @@ class ResultScreen extends Component {
                 <Text>
                     You are {this.props.category.name}
                 </Text>
+                {this.renderResults()}
                 <Button
                     title='Debate'
                     onPress={this.findDebate}

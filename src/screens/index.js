@@ -14,6 +14,7 @@ export { default as DebateList } from './debates/DebateList';
 export { default as SpectateList } from './debates/SpectateList';
 export { default as OpeningScreen } from './debates/OpeningScreen';
 export { default as Chatroom } from './debates/Chatroom';
+export { default as ChatDetails } from './debates/ChatDetails';
 
 //profile
 export { default as ProfileScreen } from './profile/ProfileScreen';

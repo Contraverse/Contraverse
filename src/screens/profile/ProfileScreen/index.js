@@ -5,22 +5,17 @@ import styles from './styles';
 import * as actions from '../../../actions/profile/profileActions';
 
 class ProfileScreen extends Component {
-    componentWillMount() {
-        const { userID, fetchUserData } = this.props;
-        fetchUserData(userID);
-    }
-
     renderLoading() {
         return <View />;
     }
 
     renderMain() {
-        const { imageURI, username } = this.props;
+        const { avatar, username } = this.props.user;
         return (
             <View style={styles.container}>
                 <Image
                     style={styles.icon}
-                    source={{ uri: imageURI }}
+                    source={{ uri: avatar }}
                 />
                 <Text>{username}</Text>
             </View>
@@ -28,15 +23,15 @@ class ProfileScreen extends Component {
     }
 
     render() {
-        if(this.props.imageURI) {
+        if(this.props.user) {
             return this.renderMain();
         }
         return this.renderLoading();
     }
 }
 
-mapStateToProps = ({ profile, auth }) => {
-    return { ...profile, userID: auth.user.uid };
+mapStateToProps = ({ auth }) => {
+    return { user: auth.user };
 }
 
 export default connect(mapStateToProps, actions)(ProfileScreen);
