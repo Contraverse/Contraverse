@@ -1,0 +1,13 @@
+{
+  "api": {
+    "apiKey": "AIzaSyA_uBXVIGmqSyclrksKF9KSCf8N9dhSdBo",
+    "authDomain": "controverse-f770c.firebaseapp.com",
+    "databaseURL": "https://controverse-f770c.firebaseio.com",
+    "projectId": "controverse-f770c",
+    "storageBucket": "controverse-f770c.appspot.com",
+    "messagingSenderId": "791590717616"
+  },
+  "settings": {
+    "timestampsInSnapshots": true
+  }
+}

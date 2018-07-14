@@ -1,0 +1,4 @@
+{
+  "ROOT": "https://us-central1-controverse-f770c.cloudfunctions.net",
+  "ROOT_TEST": "http://localhost:5000/controverse-f770c/us-central1"
+}
