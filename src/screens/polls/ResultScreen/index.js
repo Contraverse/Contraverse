@@ -77,7 +77,7 @@ class ResultScreen extends Component {
     }
 
     render() {
-        if (this.props.category)
+        if(this.props.category)
             return this.renderMain();
         return this.renderLoading();
     }
@@ -94,9 +94,9 @@ function formatData(data, categories) {
         }));
 }
 
-const mapStateToProps = ({polls, results}) => {
+const mapStateToProps = ({ polls, results }) => {
     const poll = polls.currentPoll;
-    return {...results, poll};
+    return { ...results, poll };
 }
 
 export default connect(mapStateToProps, actions)(ResultScreen);

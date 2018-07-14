@@ -47,6 +47,7 @@ class SignupScreen extends Component {
                     color={GoogleSigninButton.Color.Dark}
                     onPress={this.onGooglePress}
                 />
+
                 <Input
                     placeholder='Username'
                     onChangeText={text => updateForm('username', text)}
