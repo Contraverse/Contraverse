@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Button } from 'react-native';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { connect } from 'react-redux';
+import LoadingScreen from '../../LoadingScreen';
 import * as actions from '../../../actions/debates/chatroomActions';
 
 class Chatroom extends Component {
@@ -56,7 +57,7 @@ class Chatroom extends Component {
         if(this.props.messages) {
             return this.renderMain();
         }
-        return this.renderLoading();
+        return <LoadingScreen />;
     }
 }
 

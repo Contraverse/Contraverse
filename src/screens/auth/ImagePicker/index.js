@@ -3,6 +3,7 @@ import { Image, View, TouchableOpacity } from 'react-native';
 import Grid from 'react-native-grid-component';
 import { connect } from 'react-redux';
 import styles from './styles';
+import LoadingScreen from '../../LoadingScreen';
 import * as actions from '../../../actions/auth/imagePickerActions';
 
 class ImagePicker extends Component {
@@ -54,7 +55,7 @@ class ImagePicker extends Component {
         if(this.props.images) {
             return this.renderMain();
         }
-        return this.renderLoading();
+        return <LoadingScreen />;
     }
 }
 

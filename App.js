@@ -4,6 +4,7 @@ import Router from './src/navigation';
 import { Provider } from 'react-redux';
 import firebase from '@firebase/app';
 import { GoogleSignin } from 'react-native-google-signin';
+import LoadingScreen from './screens/LoadingScreen';
 import store from './src/reducers';
 import config from './config/firebase';
 import googleConfig from './config/googleSignin';
@@ -20,13 +21,9 @@ export default class App extends Component {
     this.setState({ loading: false });
   }
 
-  renderLoading() {
-    return <View />;
-  }
-
   render() {
     if(this.state.loading)
-      return this.renderLoading();
+      return <LoadingScreen />;
     console.log("Main");
     return (
       <Provider store={store}>

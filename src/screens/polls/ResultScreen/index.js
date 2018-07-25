@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Button, Text, View} from 'react-native';
 import {connect} from 'react-redux';
 import {PieChart} from 'react-native-svg-charts';
+import LoadingScreen from '../../LoadingScreen';
 import * as actions from '../../../actions/polls/resultActions';
 import styles from './styles';
 
@@ -20,13 +21,9 @@ class ResultScreen extends Component {
         return findSpectate(poll.id, navigation);
     }
 
-    renderLoading() {
-        return <View/>;
-    }
-
     renderResults() {
         if (!this.props.results)
-            return this.renderLoading();
+            return <LoadingScreen />;
         const {results, poll} = this.props;
         const totalData = formatData(results.totalVotes.counts, poll.categories);
         const maleData = formatData(results.genderVotes.male, poll.categories);
@@ -79,7 +76,7 @@ class ResultScreen extends Component {
     render() {
         if(this.props.category)
             return this.renderMain();
-        return this.renderLoading();
+        return <LoadingScreen />;
     }
 }
 

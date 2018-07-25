@@ -19,7 +19,7 @@ DebateStack.navigationOptions = {
             focused={focused}
             name={Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-link'}
         />
-    ),
+    )
 };
 
 export default DebateStack;

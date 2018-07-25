@@ -8,4 +8,9 @@ export default createStackNavigator({
     Signup: SignupScreen,
     AdditionalInfo,
     ImagePicker
-})
+}, {
+    headerMode: 'none',
+    navigationOptions: {
+        headerVisible: false,
+    }
+});

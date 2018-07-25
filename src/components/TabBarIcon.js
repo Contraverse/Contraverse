@@ -1,6 +1,6 @@
 import React from 'react';
-import Icon  from 'react-native-vector-icons/Ionicons';
-import Colors from '../styles/Colors';
+import Icon from 'react-native-vector-icons/Ionicons';
+import Colors from '../styles/colors';
 
 export default class TabBarIcon extends React.Component {
   render() {

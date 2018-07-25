@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import commonStyles from '../../../styles/common';
+import { commonStyles } from '../../../styles';
 
 
 export default StyleSheet.create({
@@ -9,11 +9,18 @@ export default StyleSheet.create({
     content: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'transparent'
+        justifyContent: 'flex-end',
+        backgroundColor: 'transparent',
+        paddingBottom: 32
     },
     title: {
-        fontSize: 20
+        fontSize: 44,
+        color: '#FFFFFF'
+    },
+    subtitle: {
+        color: '#FFFFFF',
+        fontSize: 16,
+        marginVertical: 16
     },
     background: {
         position: 'absolute',
@@ -26,5 +33,12 @@ export default StyleSheet.create({
         flex: 1,
         width: commonStyles.maxWidth,
         height: commonStyles.maxHeight,
+    },
+    footer: commonStyles.footer,
+    button: {
+        height: 72
+    },
+    buttonText: {
+        fontSize: 20
     }
 })

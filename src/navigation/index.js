@@ -1,10 +1,10 @@
 import React from 'react';
 import {createSwitchNavigator} from 'react-navigation';
 
-import MainTabNavigator from './MainTabNavigator';
-import AuthNavigator from './AuthNavigator';
+import DrawerNavigator from './DrawerNavigator';
+import AuthStack from './AuthStack';
 
 export default createSwitchNavigator({
-    Auth: AuthNavigator,
-    Main: MainTabNavigator,
+    Auth: AuthStack,
+    Main: DrawerNavigator,
 });

@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text, Button, Image, PickerIOS } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import { Input } from '../../../components';
+import { Button, Input } from '../../../components';
 import * as actions from '../../../actions/auth/authActions';
 import styles from './styles';
-import {GoogleSigninButton} from "react-native-google-signin";
 
 class SignupScreen extends Component {
-    onImagePickerPress = () => {
-        this.props.navigation.navigate('ImagePicker')
-    }
-
-    onGooglePress = () =>{
-        const { intervalID, navigation, googleAuth } = this.props;
-        googleAuth(intervalID, navigation);
+    onLoginPress = () => {
+        this.props.navigation.pop();
     }
 
     onSubmit = () => {
@@ -22,70 +16,50 @@ class SignupScreen extends Component {
         signup(intervalID, email, password, user, navigation);
     }
 
-    renderImage() {
-        const uri = this.props.imageURI;
-        if(uri) {
-            return (
-                <Image
-                    style={styles.image}
-                    source={{ uri }}
-                />
-            );
-        }
-    }
-
     render() {
-        const { username, email, password, updateForm, gender } = this.props;
+        const { username, email, password, updateForm } = this.props;
         return (
             <View style={styles.container}>
-                <Text style={styles.title}>
-                    Sign Up
+                <Text style={styles.header}>
+                    Controverse
                 </Text>
-                <GoogleSigninButton
-                    style={{ width: 200, height: 48 }}
-                    size={GoogleSigninButton.Size.Wide}
-                    color={GoogleSigninButton.Color.Dark}
-                    onPress={this.onGooglePress}
-                />
-
-                <Input
-                    placeholder='Username'
-                    onChangeText={text => updateForm('username', text)}
-                    value={username}
-                />
-                <Input
-                    placeholder='Email'
-                    onChangeText={text => updateForm('email', text)}
-                    value={email}
-                />
-                <Input
-                    secureTextEntry
-                    placeholder='Password'
-                    onChangeText={text => updateForm('password', text)}
-                    value={password}
-                />
-                <View style={styles.imagePickerContainer}>
-                    {this.renderImage()}
-                    <Button
-                        title='Select Avatar'
-                        onPress={this.onImagePickerPress}
+                <View style={styles.content}>
+                    <Text style={styles.title}>
+                        Signup
+                    </Text>
+                    <Input
+                        placeholder='Username'
+                        onChangeText={text => updateForm('username', text)}
+                        value={username}
                     />
+                    <Input
+                        placeholder='Email'
+                        onChangeText={text => updateForm('email', text)}
+                        value={email}
+                    />
+                    <Input
+                        secureTextEntry
+                        placeholder='Password'
+                        onChangeText={text => updateForm('password', text)}
+                        value={password}
+                    />
+                    <Button
+                        style={styles.submitButton}
+                        title='Register'
+                        onPress={this.onSubmit}
+                    />
+                    <Text>{this.props.error}</Text>
                 </View>
-                <View style={styles.picker}>
-                    <PickerIOS
-                        selectedValue={gender}
-                        style={{flex: 1}}
-                        onValueChange={value => updateForm('gender', value)}
-                    >
-                        <PickerIOS.Item label='Male' value='male' />
-                        <PickerIOS.Item label='Female' value='female' />
-                    </PickerIOS>
+                <View style={styles.footer}>
+                    <Text style={styles.footerText}>
+                        Already a member?
+                    </Text>
+                    <TouchableOpacity onPress={this.onLoginPress}>
+                        <Text style={styles.loginButton}>
+                            Login
+                        </Text>
+                    </TouchableOpacity>
                 </View>
-                <Button
-                    title='Sign Up'
-                    onPress={this.onSubmit}
-                />
-                <Text>{JSON.stringify(this.props.error)}</Text>
             </View>
         );
     }

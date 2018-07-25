@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Image, Text, Button, Dimensions } from 'react-native';
+import { View, ScrollView, Image, Text, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 import styles from './styles';
-import { setIntervalID } from "../../../actions/auth/splashActions";
+import { Button } from '../../../components'
+import * as actions from "../../../actions/auth/splashActions";
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -26,12 +27,8 @@ class SplashScreen extends Component {
         this.props.setIntervalID(intervalID);
     }
 
-    onLoginPress = () => {
+    onButtonPress = () => {
         this.props.navigation.navigate('Login');
-    }
-
-    onSignupPress = () => {
-        this.props.navigation.navigate('Signup')
     }
 
     renderImages() {
@@ -60,13 +57,16 @@ class SplashScreen extends Component {
                   <Text style={styles.title}>
                       Welcome to Controverse!
                   </Text>
+                  <Text style={styles.subtitle}>
+                      A place to share and build opinions
+                  </Text>
+              </View>
+              <View style={styles.footer}>
                   <Button
-                      title='Login'
-                      onPress={this.onLoginPress}
-                  />
-                  <Button
-                      title='Sign Up'
-                      onPress={this.onSignupPress}
+                      style={styles.button}
+                      textStyle={styles.buttonText}
+                      title='GET STARTED'
+                      onPress={this.onButtonPress}
                   />
               </View>
           </View>
@@ -74,4 +74,4 @@ class SplashScreen extends Component {
     }
 }
 
-export default connect(null, { setIntervalID })(SplashScreen);
+export default connect(null, actions)(SplashScreen);

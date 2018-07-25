@@ -1,11 +1,25 @@
 import React from 'react';
+import { Text } from 'react-native';
 import {Platform} from "react-native";
 import TabBarIcon from '../components/TabBarIcon';
 import { createStackNavigator } from 'react-navigation';
 import {PollScreen, QuestionScreen, ResultScreen} from "../screens";
 
+const MenuButton = ({ navigation }) => (
+    <Text
+        onPress={() => navigation.openDrawer()}
+    >
+        Menu
+    </Text>
+)
+
 const PollStack = createStackNavigator({
-    Polls: PollScreen,
+    Polls: {
+        screen: PollScreen,
+        navigationOptions: ({navigation}) => ({
+            headerLeft: <MenuButton navigation={navigation} />
+        })
+    },
     Question: QuestionScreen,
     Results: ResultScreen
 });
@@ -22,6 +36,7 @@ PollStack.navigationOptions = {
             }
         />
     ),
+
 };
 
 export default PollStack;
