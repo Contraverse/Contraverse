@@ -23,7 +23,6 @@ export default class App extends Component {
   render() {
     if(this.state.loading)
       return <LoadingScreen />;
-    console.log("Main");
     return (
       <Provider store={store}>
         <Router />
