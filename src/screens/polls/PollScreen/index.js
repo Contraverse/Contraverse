@@ -1,12 +1,25 @@
-import React, {Component} from 'react';
-import {FlatList, View} from 'react-native';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { FlatList, Text, View } from 'react-native';
+import { connect } from 'react-redux';
 import PollCard from './PollCard';
 import LoadingScreen from '../../LoadingScreen';
 import * as actions from '../../../actions/polls/pollActions';
 import styles from './styles';
 
 class PollScreen extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    headerLeft: (
+      <Text onPress={() => navigation.openDrawer()}>
+        Menu
+      </Text>
+    ),
+    headerRight: (
+      <Text onPress={() => navigation.navigate('CreatePoll')}>
+        Add
+      </Text>
+    )
+  });
+
   componentWillMount() {
     this.props.fetchPolls(20);
   }
@@ -14,7 +27,7 @@ class PollScreen extends Component {
   selectPoll = (poll) => {
     const {selectPoll, navigation} = this.props;
     selectPoll(poll, navigation);
-  }
+  };
 
   renderPoll = ({item}) => {
     return (
@@ -23,7 +36,7 @@ class PollScreen extends Component {
         onPress={() => this.selectPoll(item)}
       />
     )
-  }
+  };
 
   renderMain() {
     return (

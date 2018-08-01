@@ -7,6 +7,7 @@ export { default as AdditionalInfo } from './auth/AdditionalInfo';
 
 //polls
 export { default as PollScreen } from './polls/PollScreen';
+export { default as CreatePollScreen } from './createPoll/CreateScreen';
 export { default as QuestionScreen } from './polls/QuestionScreen';
 export { default as ResultScreen } from './polls/ResultScreen';
 

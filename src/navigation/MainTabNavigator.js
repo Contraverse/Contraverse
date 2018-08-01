@@ -8,7 +8,7 @@ import ProfileStack from './ProfileStack';
 
 
 export default createBottomTabNavigator({
-    PollStack,
-    DebateStack,
-    ProfileStack,
+  PollStack,
+  ProfileStack,
+  DebateStack,
 });
