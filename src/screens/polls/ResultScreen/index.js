@@ -1,10 +1,12 @@
-import React, {Component} from 'react';
-import {Button, Text, View} from 'react-native';
-import {connect} from 'react-redux';
-import {PieChart} from 'react-native-svg-charts';
+import React, { Component } from 'react';
+import { Button, Text, View } from 'react-native';
+import { connect } from 'react-redux';
+import { PieChart } from 'react-native-svg-charts';
 import LoadingScreen from '../../LoadingScreen';
 import * as actions from '../../../actions/polls/resultActions';
 import styles from './styles';
+
+COLORS = ['#ff0000', '#ff0000'];
 
 class ResultScreen extends Component {
     componentWillMount() {
@@ -14,20 +16,20 @@ class ResultScreen extends Component {
     findDebate = () => {
         const {category, poll, findDebate, navigation} = this.props;
         return findDebate(poll.id, category.name, navigation);
-    }
+    };
 
     findSpectate = () => {
         const {poll, navigation, findSpectate} = this.props;
         return findSpectate(poll.id, navigation);
-    }
+    };
 
     renderResults() {
         if (!this.props.results)
             return <LoadingScreen />;
-        const {results, poll} = this.props;
-        const totalData = formatData(results.totalVotes.counts, poll.categories);
-        const maleData = formatData(results.genderVotes.male, poll.categories);
-        const femaleData = formatData(results.genderVotes.female, poll.categories);
+      const { results } = this.props;
+      const totalData = formatData(results.totalVotes.counts);
+      const maleData = formatData(results.genderVotes.male);
+      const femaleData = formatData(results.genderVotes.female);
         return (
             <View style={styles.charts}>
                 <View style={styles.chartSection}>
@@ -51,14 +53,11 @@ class ResultScreen extends Component {
     }
 
 
-    renderMain() {
+  render() {
         return (
             <View style={styles.container}>
                 <Text>
                     Results
-                </Text>
-                <Text>
-                    You are {this.props.category.name}
                 </Text>
                 <Button
                     title='Debate'
@@ -72,20 +71,14 @@ class ResultScreen extends Component {
             </View>
         );
     }
-
-    render() {
-        if(this.props.category)
-            return this.renderMain();
-        return <LoadingScreen />;
-    }
 }
 
-function formatData(data, categories) {
+function formatData(data) {
     return data.filter(value => value > 0)
         .map((votes, index) => ({
             value: votes,
             svg: {
-                fill: categories[index].color
+              fill: COLORS[index]
             },
             key: index
         }));
@@ -94,6 +87,6 @@ function formatData(data, categories) {
 const mapStateToProps = ({ polls, results }) => {
     const poll = polls.currentPoll;
     return { ...results, poll };
-}
+};
 
 export default connect(mapStateToProps, actions)(ResultScreen);

@@ -1,62 +1,54 @@
 import React, { Component } from 'react';
-import { View, FlatList, Button, Text } from 'react-native';
-import QuestionCard from './QuestionCard';
+import { Button, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 import * as actions from '../../../actions/polls/questionActions';
 import styles from './styles';
 
 class QuestionScreen extends Component {
-    componentWillMount() {
-        const { fetchQuestions, poll} = this.props;
-        if(poll)
-            fetchQuestions(poll.id);
-    }
+  onSelect = (index) => {
+    this.props.selectAnswer(index);
+  };
 
-    componentDidMount() {
-        this.scores = new Array(this.props.questions.length);
+  onSubmit = () => {
+    if (this.props.selectedAnswer !== null) {
+      const { submit, poll, navigation } = this.props;
+      submit(poll.id, this.props.selectedAnswer, navigation);
     }
+    else {
+      alert("Check to see if you have answered all the questions");
+    }
+  };
 
-    onSelect = (index, score) => {
-        this.scores[index] = score;
-    }
+  renderAnswerChoices() {
+    return this.props.poll.answers.map((answer, index) => {
+      return (
+        <Button
+          title={answer}
+          onPress={() => this.onSelect(index)}
+        />
+      )
+    })
+  }
 
-    onSubmit = () => {
-        if(this.scores.includes(undefined))
-            alert("Check to see if you have answered all the questions");
-        else {
-            const { submit, poll, navigation } = this.props;
-            submit(poll.id, poll.categories, this.scores, navigation);
-        }
-    }
-
-    renderQuestion = ({ item, index }) => {
-        return (
-            <QuestionCard
-                { ...item }
-                onSelect={score => this.onSelect(index, score)}
-            />
-        );
-    }
-
-    render() {
-        return (
-            <View style={styles.container}>
-                <FlatList
-                    data={this.props.questions}
-                    keyExtractor={item => item.id}
-                    renderItem={this.renderQuestion}
-                />
-                <Button
-                    title='Submit'
-                    onPress={this.onSubmit}
-                />
-            </View>
-        );
-    }
+  render() {
+    const { poll } = this.props;
+    return (
+      <View style={styles.container}>
+        <Text>
+          {poll.question}
+        </Text>
+        {this.renderAnswerChoices()}
+        <Button
+          title='Submit'
+          onPress={this.onSubmit}
+        />
+      </View>
+    );
+  }
 }
 
 const mapStateToProps = ({ polls, questions }) => {
-    return { ...questions, poll: polls.currentPoll };
-}
+  return { ...questions, poll: polls.currentPoll };
+};
 
 export default connect(mapStateToProps, actions)(QuestionScreen);

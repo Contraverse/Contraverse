@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { GoogleSigninButton } from 'react-native-google-signin';
 import { connect } from 'react-redux';
-import { Input, Button } from '../../../components';
+import { Button, Input } from '../../../components';
 import * as actions from '../../../actions/auth/authActions';
 import styles from './styles';
 
@@ -10,16 +10,16 @@ class LoginScreen extends Component {
     onPress = () => {
         const { intervalID, email, password, navigation, login } = this.props;
         login(intervalID, email, password, navigation );
-    }
+    };
 
     onSignupPress = () => {
         this.props.navigation.navigate('Signup');
-    }
+    };
 
     onGooglePress = () => {
         const { intervalID, navigation, googleAuth } = this.props;
         googleAuth(intervalID, navigation);
-    }
+    };
 
     render() {
         const { email, password, updateForm } = this.props;
@@ -61,7 +61,7 @@ class LoginScreen extends Component {
                             color={GoogleSigninButton.Color.Light}
                             onPress={this.onGooglePress}
                         />
-                        <Text>{this.props.error}</Text>
+                      <Text>{this.props.error.message}</Text>
                     </View>
                 </View>
                 <View style={styles.footer}>
