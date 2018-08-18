@@ -8,11 +8,6 @@ import styles from './styles';
 
 class PollScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
-    headerLeft: (
-      <Text onPress={() => navigation.openDrawer()}>
-        Menu
-      </Text>
-    ),
     headerRight: (
       <Text onPress={() => navigation.navigate('CreatePoll')}>
         Add
@@ -20,23 +15,23 @@ class PollScreen extends Component {
     )
   });
 
-  componentWillMount() {
-    this.props.fetchPolls(20);
-  }
-
-  selectPoll = (poll) => {
-    const {selectPoll, navigation} = this.props;
-    selectPoll(poll, navigation);
-  };
-
   renderPoll = ({item}) => {
     return (
       <PollCard
-        title={item.title}
+        title={item.question}
         onPress={() => this.selectPoll(item)}
       />
     )
   };
+
+  selectPoll = (poll) => {
+    const { selectPoll, navigation } = this.props;
+    selectPoll(poll, navigation);
+  };
+
+  componentWillMount() {
+    this.props.fetchPolls();
+  }
 
   renderMain() {
     return (

@@ -1,27 +1,16 @@
 import firebase from '@firebase/app';
-import '@firebase/firestore';
+import axios from 'axios';
+import { ROOT } from '../../../config/api.json'
 import '@firebase/auth';
 import * as types from './types';
 
-const FIRESTORE_SETTINGS = {
-  timestampsInSnapshots: true
-};
-
-export const fetchPolls = (size) => {
-  const db = firebase.firestore();
-  db.settings(FIRESTORE_SETTINGS);
-  const questionRef = db.collection('Polls');
+export const fetchPolls = () => {
   return async (dispatch) => {
     dispatch({ type: types.POLL_FETCH_REQUEST });
     try {
-      const query = questionRef.orderBy('dateCreated').limit(size);
-      const snapshot = await query.get();
-
-      const polls = snapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      dispatch({ type: types.POLL_FETCH_SUCCESS, payload: polls });
+      const polls = await axios.get(`${ROOT}/polls`);
+      console.log(polls);
+      dispatch({ type: types.POLL_FETCH_SUCCESS, payload: polls.data });
     }
     catch (err) {
       dispatch({ type: types.POLL_FETCH_ERROR, payload: err });

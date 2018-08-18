@@ -5,18 +5,18 @@ import { Button, Input } from '../../../components';
 import * as actions from '../../../actions/auth/authActions';
 import styles from './styles';
 
-const AVATAR = 'https://firebasestorage.googleapis.com/v0/b/controverse-f770c.appspot.com/o/UserIcons%2Fmegaphone.png?alt=media&token=3b67ec2f-37b0-4f65-a5ae-d53b82d9e415'
+const AVATAR = 'https://firebasestorage.googleapis.com/v0/b/controverse-f770c.appspot.com/o/UserIcons%2Fmegaphone.png?alt=media&token=3b67ec2f-37b0-4f65-a5ae-d53b82d9e415';
 
 class SignupScreen extends Component {
   onLoginPress = () => {
     this.props.navigation.pop();
-  }
+  };
 
   onSubmit = () => {
     const { email, password, username, intervalID, navigation, signup } = this.props;
-    const user = { avatar: AVATAR, gender: 'male', username }; // TODO: Start adding real data
+    const user = { avatar: AVATAR, username };
     signup(intervalID, email, password, user, navigation);
-  }
+  };
 
   render() {
     const { username, email, password, updateForm } = this.props;
@@ -30,7 +30,7 @@ class SignupScreen extends Component {
             Signup
           </Text>
           <Input
-            placeholder='Username'
+            placeholder='Name'
             onChangeText={text => updateForm('username', text)}
             value={username}
           />
@@ -50,7 +50,7 @@ class SignupScreen extends Component {
             title='Register'
             onPress={this.onSubmit}
           />
-          <Text>{this.props.error}</Text>
+          <Text>{this.props.error.message}</Text>
         </View>
         <View style={styles.footer}>
           <Text style={styles.footerText}>
@@ -69,6 +69,6 @@ class SignupScreen extends Component {
 
 const mapStateToProps = ({ auth, splash }) => {
   return { ...auth, ...splash };
-}
+};
 
 export default connect(mapStateToProps, actions)(SignupScreen);

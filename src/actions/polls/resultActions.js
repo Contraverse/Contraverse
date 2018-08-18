@@ -10,10 +10,10 @@ export const fetchResults = (pollID) => {
   const db = firebase.firestore();
   return async (dispatch) => {
     dispatch({ type: types.RESULTS_FETCH_REQUEST });
-    const ref = db.collection(`Polls/${pollID}/Results`);
-    const stats = await getCollection(ref);
-    console.log(stats);
-    dispatch({ type: types.RESULTS_FETCH_SUCCESS, payload: stats });
+    const doc = await db.doc(`Results/${pollID}`).get();
+    const { counts } = doc.data();
+    console.log(counts);
+    dispatch({ type: types.RESULTS_FETCH_SUCCESS, payload: counts });
   }
 };
 
@@ -21,6 +21,7 @@ export function findDebate(pollID, category, navigation) {
   const userID = firebase.auth().currentUser.uid;
   return async (dispatch) => {
     dispatch({ type: types.FIND_DEBATE_REQUEST });
+    console.log(category, pollID, userID);
     const { data } = await axios.post(`${ROOT}/findDebate`, { pollID, category, userID });
     dispatch({ type: types.FIND_DEBATE_SUCCESS });
     if (data.found)

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import {commonStyles, colors} from "../../../styles";
+import { commonStyles } from "../../../styles";
 
 export default StyleSheet.create({
     container: {
@@ -45,7 +45,7 @@ export default StyleSheet.create({
         marginRight: 16
     },
     loginButton: {
-        color: colors.primary,
+      color: '#8322f7',
         fontSize: 18
     }
 })

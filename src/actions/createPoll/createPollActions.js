@@ -1,7 +1,11 @@
 import * as types from './types';
+import { ROOT } from "../../../config/api";
+import axios from "axios/index";
 
 export function createPoll(question, answers, navigation) {
   return async () => {
+    await axios.post(`${ROOT}/createPoll`, { question, answers });
+    alert('Your poll has been set. Once our team verifies the poll, it will be posted.');
     navigation.navigate('Polls');
   }
 }
