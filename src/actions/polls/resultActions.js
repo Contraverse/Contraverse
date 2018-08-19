@@ -22,10 +22,10 @@ export function findDebate(pollID, category, navigation) {
   return async (dispatch) => {
     dispatch({ type: types.FIND_DEBATE_REQUEST });
     console.log(category, pollID, userID);
-    const { data } = await axios.post(`${ROOT}/findDebate`, { pollID, category, userID });
+    const { data, status } = await axios.post(`${ROOT}/findDebate`, { pollID, category, userID }); // data is opponent ID
     dispatch({ type: types.FIND_DEBATE_SUCCESS });
-    if (data.found)
-      navigation.navigate('DebateList');
+    if (status === 200)
+      navigation.navigate('DebateList'); // TODO: Navigate to opening argument screen with the opponentID
     else
       alert("No match found. We'll notify you when we find you an opponent");
   }
@@ -35,8 +35,9 @@ export function findSpectate(pollID, navigation) {
   const userID = firebase.auth().currentUser.uid;
   return async (dispatch) => {
     dispatch({ type: types.FIND_SPECTATE_REQUEST });
-    const { data } = await axios.post(`${ROOT}/findSpectate`, { pollID, userID });
-    if (data.found)
+    const { data, status } = await axios.post(`${ROOT}/findSpectate`, { pollID, userID });
+    console.log(status);
+    if (status === 200)
       navigation.navigate('SpectateList');
     else
       alert("No debate found. Come back later!");
